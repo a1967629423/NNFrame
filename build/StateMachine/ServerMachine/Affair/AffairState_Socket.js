@@ -18,6 +18,8 @@ let AffairState_Socket = class AffairState_Socket extends AffairState_1.default 
         super.Start();
         console.log("socket is run");
     }
+    disposeSocket() {
+    }
 };
 AffairState_Socket = __decorate([
     StateMachine_1.LinkTo("http", AffairState_Http_1.default),

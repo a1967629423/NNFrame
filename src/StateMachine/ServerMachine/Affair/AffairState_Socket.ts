@@ -13,4 +13,8 @@ export default class AffairState_Socket extends AffairState
         super.Start();
         console.log("socket is run");
     }
+    disposeSocket()
+    {
+        
+    }
 }

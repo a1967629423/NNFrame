@@ -8,16 +8,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 const StateMachine_1 = require("../../StateMachine");
 class AffairMachine extends StateMachine_1.NNStateMachine.StateMachine {
-    constructor() {
+    constructor(socketServer, httpServer) {
         super();
         this.nowState = null;
     }
-    dispose(socke, data) {
-        this.nowState ? this.nowState.dispose(socke, data) : 0;
+    disposeSocket(socke, data) {
+        this.nowState ? this.nowState.disposeSocket(socke, data) : 0;
+    }
+    disposeHttp(req, res) {
+        this.nowState ? this.nowState.disposeHttp(req, res) : 0;
     }
 }
 __decorate([
     StateMachine_1.AsyncAttachState
-], AffairMachine.prototype, "dispose", null);
+], AffairMachine.prototype, "disposeSocket", null);
+__decorate([
+    StateMachine_1.AsyncAttachState
+], AffairMachine.prototype, "disposeHttp", null);
 exports.default = AffairMachine;
 //# sourceMappingURL=AffairMachine.js.map

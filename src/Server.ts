@@ -1,6 +1,8 @@
 import * as http from 'http';
 import * as fs from 'fs';
 import * as net from 'net';
+import { NNTools } from './Tools/NNTools';
+import AffairMachine from './StateMachine/ServerMachine/Affair/AffairMachine';
 class RouteCell
 {
     head:((type:string,typeIdx:number,url:string)=>{})|null=null;
@@ -56,6 +58,7 @@ export default class NNFrame {
     <br><h3>{topic}</h3>
     </body>`;
     private server: http.Server = http.createServer();
+    private AffairPool:NNTools.ObjectPool_Auto<AffairMachine>;
     constructor(port: number = 3000,httpProt:number = 4000, hostname: string = 'localhost',homePath:string="./htdoc") {
         let client = new net.Socket();
         client.connect(port,hostname);
@@ -63,6 +66,8 @@ export default class NNFrame {
         this.httpPort = httpProt;
         this.port = port;
         this.hostname = hostname;
+        this.AffairPool = new NNTools.ObjectPool_Auto(AffairMachine);
+        this.AffairPool.InitPool(10);
         client.on('error',err=>{
             //主服务不存在，自己就是主服务
             if(err.message.indexOf('connect ECONNREFUSED')>-1)
@@ -128,7 +133,6 @@ export default class NNFrame {
                 c1.pipe(c);                   
                 c.pipe(c1);
                 c1.write(data);
-                
             }
         });
     }

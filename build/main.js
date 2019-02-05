@@ -10,7 +10,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Server_1 = __importDefault(require("./Server"));
-const AffairMachine_1 = __importDefault(require("./StateMachine/ServerMachine/Affair/AffairMachine"));
 function testDecorator(v1) {
     return function (target) {
         !target.prototype.$v1 && (target.prototype.$v1 = v1);
@@ -47,5 +46,4 @@ HelloClass = __decorate([
 //var hello = new HelloClass();
 //console.log(hello.allModel)
 var app = new Server_1.default(3000);
-var test = new AffairMachine_1.default();
 //# sourceMappingURL=main.js.map

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const events_1 = require("events");
 /**
  * 载入目录下的所有脚本，用于实现状态初始化
  * 注：此方法使用的了fs模块，不适用于网页js
@@ -276,6 +277,9 @@ var NNStateMachine;
     }
     OperatorStruct.cachesOperator = [];
     NNStateMachine.OperatorStruct = OperatorStruct;
+    /**
+     * 状态基类
+     */
     class State {
         constructor(cxt) {
             this.quitEvent = null;
@@ -291,8 +295,14 @@ var NNStateMachine;
         }
     }
     NNStateMachine.State = State;
-    class StateMachine {
+    /**
+     * 2019年2月5日20点57分
+     * 状态机基类
+     * TODO：将EventEmitter类自己实现，因为默认是使用nodejs
+     */
+    class StateMachine extends events_1.EventEmitter {
         constructor() {
+            super();
             this.nowState = null;
             this.attachment = [];
             this.stateMap = [];
@@ -320,18 +330,19 @@ var NNStateMachine;
          * 引起一个事件
          * @param eventName 事件名
          */
-        emit(eventName) {
-            if (this.nowState) {
+        emit(event, ...args) {
+            if (this.nowStatez && typeof event === "string") {
                 this.stateDB.forEach(value => {
                     if (value.state === this.nowState) {
                         this.stateMap[value.idx].forEach(block => {
-                            if (block.eventName === eventName) {
+                            if (block.eventName === event) {
                                 this.changeState(block.target);
                             }
                         });
                     }
                 });
             }
+            return super.emit(event, args);
         }
         /**
          * 附加一个状态在状态机上，附加状态独立于普通状态，附加状态会在普通状态之前被调用，只能通过移除的方式来退出而不是切换

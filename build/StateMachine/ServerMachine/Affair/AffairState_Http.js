@@ -17,8 +17,8 @@ let AffairState_Http = class AffairState_Http extends AffairState_1.default {
         super.Start();
         console.log("http is run");
     }
-    dispose(socket, data) {
-        super.dispose(socket, data);
+    disposeSocket(socket, data) {
+        super.disposeSocket(socket, data);
     }
 };
 AffairState_Http = __decorate([

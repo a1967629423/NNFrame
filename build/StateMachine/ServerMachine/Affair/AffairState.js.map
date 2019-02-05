@@ -1,1 +1,1 @@
-{"version":3,"file":"AffairState.js","sourceRoot":"","sources":["../../../../src/StateMachine/ServerMachine/Affair/AffairState.ts"],"names":[],"mappings":";;AACA,qDAAoD;AACpD,MAAqB,WAAY,SAAQ,6BAAc,CAAC,KAAK;IAEzD,OAAO,CAAC,KAAgB,EAAC,IAAW;IAEpC,CAAC;CACJ;AALD,8BAKC"}
+{"version":3,"file":"AffairState.js","sourceRoot":"","sources":["../../../../src/StateMachine/ServerMachine/Affair/AffairState.ts"],"names":[],"mappings":";;AACA,qDAAoD;AAEpD,MAAqB,WAAY,SAAQ,6BAAc,CAAC,KAAK;IAEzD,aAAa,CAAC,KAAgB,EAAC,IAAW;IAE1C,CAAC;IACD,WAAW,CAAC,GAAwB,EAAC,GAAuB;IAG5D,CAAC;CACJ;AATD,8BASC"}

@@ -6,10 +6,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     result["default"] = mod;
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const http = __importStar(require("http"));
 const fs = __importStar(require("fs"));
 const net = __importStar(require("net"));
+const NNTools_1 = require("./Tools/NNTools");
+const AffairMachine_1 = __importDefault(require("./StateMachine/ServerMachine/Affair/AffairMachine"));
 class RouteCell {
     constructor() {
         this.head = null;
@@ -73,6 +78,8 @@ class NNFrame {
         this.httpPort = httpProt;
         this.port = port;
         this.hostname = hostname;
+        this.AffairPool = new NNTools_1.NNTools.ObjectPool_Auto(AffairMachine_1.default);
+        this.AffairPool.InitPool(10);
         client.on('error', err => {
             //主服务不存在，自己就是主服务
             if (err.message.indexOf('connect ECONNREFUSED') > -1) {

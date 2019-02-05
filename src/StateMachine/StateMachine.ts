@@ -1,3 +1,4 @@
+import { EventEmitter } from "events";
 
 /**
  * 载入目录下的所有脚本，用于实现状态初始化
@@ -303,6 +304,9 @@ export  module NNStateMachine {
             OperatorStruct.cachesOperator.unshift(this);
         }
     }
+    /**
+     * 状态基类
+     */
     export  class State  {
         [key:string]:any;
         quitEvent:Function|null = null;
@@ -323,7 +327,12 @@ export  module NNStateMachine {
             if(this.quitEvent)this.quitEvent(this);
         }
     }
-    export class StateMachine {
+    /**
+     * 2019年2月5日20点57分
+     * 状态机基类
+     * TODO：将EventEmitter类自己实现，因为默认是使用nodejs
+     */
+    export class StateMachine extends EventEmitter {
         [key: string]: any;
         nowState: State | null = null
         attachment: { ch: State[], construct: { prototype: State } }[] = [];
@@ -340,6 +349,7 @@ export  module NNStateMachine {
             cs.Start();
         }
         constructor() {
+            super();
             InitStates(this);
         }
         connect(s1: State, s2: State, eventName: string) {
@@ -352,18 +362,19 @@ export  module NNStateMachine {
          * 引起一个事件
          * @param eventName 事件名
          */
-        emit(eventName: string) {
-            if (this.nowState) {
+        emit(event: string | symbol, ...args: any[]):boolean {
+            if (this.nowStatez&&typeof event==="string") {
                 this.stateDB.forEach(value => {
                     if (value.state === this.nowState) {
                         this.stateMap[value.idx].forEach(block => {
-                            if (block.eventName === eventName) {
+                            if (block.eventName === event) {
                                 this.changeState(block.target);
                             }
                         })
                     }
                 })
             }
+            return super.emit(event,args);
         }
         /**
          * 附加一个状态在状态机上，附加状态独立于普通状态，附加状态会在普通状态之前被调用，只能通过移除的方式来退出而不是切换
