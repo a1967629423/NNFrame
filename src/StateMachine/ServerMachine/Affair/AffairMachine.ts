@@ -26,6 +26,7 @@ export default class AffairMachine extends NNStateMachine.StateMachine {
     disposeHttp(req:http.IncomingMessage,res:http.ServerResponse)
     {
         this.nowState?this.nowState.disposeHttp(req,res):0;
+        
     }
     close()
     {
