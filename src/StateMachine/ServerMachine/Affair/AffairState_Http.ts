@@ -13,8 +13,8 @@ export default class AffairState_Http extends AffairState
         super.Start();
         console.log("http is run");
     }
-    dispose(socket:any,data:any)
+    disposeSocket(socket:any,data:any)
     {
-        super.dispose(socket,data);
+        super.disposeSocket(socket,data);
     }
 }
