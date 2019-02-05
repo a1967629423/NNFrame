@@ -1,0 +1,25 @@
+.test-animation
+{
+    position: relative;
+    width: 100px;
+    height: 100px;
+    background-color: greenyellow;
+}
+.test-animation:hover
+{
+    animation: changBig 1s infinite ;
+}
+@keyframes changBig
+{
+    from {
+        width: 100px;
+        height: 100px;
+        background-color: greenyellow
+    }
+    to
+    {
+        width: 200px;
+        height: 200px;
+        background-color: red;
+    }
+}
