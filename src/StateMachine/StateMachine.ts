@@ -380,9 +380,9 @@ export  module NNStateMachine {
          * 附加一个状态在状态机上，附加状态独立于普通状态，附加状态会在普通状态之前被调用，只能通过移除的方式来退出而不是切换
          * @param type 状态类
          */
-        attachState<T extends State>(type: { prototype: T, apply: Function }): T {
+        attachState<T extends State>(type: { new(...args:any[]):T },...args:any[]): T {
             //创建实例
-            var cs: T = type.apply({ __proto__: type.prototype }, [this])
+            var cs: T = new type(this,args);
             cs.quitEvent = this.attachQuit.bind(this);
             var fch = this.attachment.find((value) => {
                 if (value.construct === type) return true;

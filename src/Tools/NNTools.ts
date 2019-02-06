@@ -49,6 +49,7 @@ export namespace NNTools
     export class ObjectPool_Auto<T> extends ObjectPool<T>
     {
         private _objectConstructor:{new(...args:any[]):T};
+        private _constructArgs:any[] = [];
         /**
          * 
          * @param objConstrucor 目标对象的构造函数
@@ -61,22 +62,25 @@ export namespace NNTools
         /**
          * 用一定数量的实例初始化池
          * @param count 初始化数量
+         * @param cache 是否缓存构造参数
          * @param args 构造函数的参数
          */
-        public InitPool(count:number,...args:any[])
+        public InitPool(count:number,cache:boolean = true,...args:any[])
         {
             for(var i =0;i<count;i++)
             {
                 this.push(new this._objectConstructor(args));
             }
+            if(cache)this._constructArgs = args;
         }
         /**
          * 得到一个对象，如果对象池为空则会自动构造
+         * @param args 当对象池为空时使用此参数构造对象，如缺省则使用缓存参数
          */
         public get(...args:any[]):T
         {
             let val = super.get();
-            return val?val:new this._objectConstructor(args)
+            return val?val:args?new this._objectConstructor(args):new this._objectConstructor(this._constructArgs);
         }
     }
     export class EventEmitter

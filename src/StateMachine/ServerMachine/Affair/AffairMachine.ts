@@ -4,7 +4,7 @@ import {NNStateMachine, AsyncAttachState} from "../../StateMachine"
 import AffairState from "./AffairState";
 export default class AffairMachine extends NNStateMachine.StateMachine {
     nowState:AffairState|null = null;
-    constructor(socketServer:net.Server,httpServer:http.Server)
+    constructor()
     {
         super();
     }
